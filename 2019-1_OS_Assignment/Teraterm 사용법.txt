@@ -1,0 +1,118 @@
+리눅스 ID u15039
+비번 m023023!
+
+setup -> General -> korean
+setup -> Terminal -> korean + 949
+한국어로 전환
+
+vi 파일이름.c  C언어 virtual 머신으로 이동
+Ctrl + d  탈출
+:wq 특정 이름으로 새로 저장
+:wq! 덮어쓰기 저장
+C virtual머신에서 고쳐쓰기
+gcc 파일이름.c = 리눅스에서 컴파일
+./a.out = 실행
+Strace ./a.out = 실행 한 시스템 호출 명령어 보기
+
+코드복사 : vi 모드로 들어가서 :set paste 치고 visual studio에서 복사한 코드 리눅스에서 오른쪽 마우스 클릭
+
+삭제 : rm 파일이름
+
+cat > 파일이름
+내용
+Ctrl + c (저장)       ==> 파일저장
+
+
+#define _CRT_SECURE_NO_WARNIGNS
+
+#include <stdlib.h>
+#include <sys/types.h>
+#include <stdio.h>
+#include <unistd.h>
+
+void print_char(int ch);
+
+int main()
+{
+pid_t pid;
+int i,j;
+
+pid = fork();
+
+if (pid < 0){
+fprintf(stderr, "Fork Failed\n");
+exit (-1);
+}
+
+else if (pid == 0){
+printf("I am child process %d \n", pid);
+execlp("child","child",NULL);
+}
+
+else{
+int status;
+printf("I am parent process %d \n", pid);
+wait(&status);
+printf("satus = %d\n", status);
+printf("exit status = %d\n", WEXITSTATUS(status));
+printf("Child Complete\n");
+printf("End of parent process\n");
+exit(0);
+}
+}
+ -----------------hw31.c
+
+
+
+#define _CRT_SECURE_NO_WARNIGNS
+
+#include <stdlib.h>
+#include <sys/types.h>
+#include <stdio.h>
+#include <unistd.h>
+
+void print_char(int ch);
+
+int main()
+{
+pid_t pid;
+int i,j;
+
+pid = fork();
+
+if (pid < 0){
+fprintf(stderr, "Fork Failed\n");
+exit (-1);
+}
+
+else if (pid == 0){
+printf("I am child process %d \n", pid);
+print_char('-');
+printf("end of child\n");
+exit (0);
+}
+
+else{
+int status;
+printf("I am parent process %d \n", pid);
+print_char('0');
+printf("End of parent process\n");
+exit(0);
+}
+}
+
+void print_char(int ch)
+{
+int i,j;
+for(i=0; i<100; i++)
+{
+putchar(ch);
+fflush(stdout);
+
+for (j=0; j<10000; j++)
+;
+}
+}
+
+-------------hw32.c
+
